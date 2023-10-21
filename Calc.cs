@@ -3,7 +3,7 @@ class Calc
 {
     public static void Calculator()
     { 
-        Console.WriteLine("\t\tLogoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tKALKULATOR NIE OBSŁUGUJE LICZB UJEMNYCH!\t[zamiast -5 napisz (5-10) albo (5-5*2)]\n\tKALKULATOR NIE OBSŁUGUJE UŁAMKÓW DZIESIĘTNYCH!\t[zamiast 0.5 napisz (1/2)]");
+        Console.WriteLine("\t\tLogoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tUWAGA!\tKalkulator nie obsługuje liczb ujemnych [zamiast -5 napisz (5-10) albo (5-5*2)]\n\tUWAGA!\tPrzy ułamkach dziesiętnych użyj [,] albo [.] w zależności od systemu i regionu");
         while (!false)
         {
             Console.Write("Wprowadź wyrażenie (lub pusty aby zakończyć): ");
@@ -26,9 +26,26 @@ class Calc
     public static List<string> expressionToList(string expression)
     {
         List<string> Tokens = new List<string>();
-        if (IsOperator(Convert.ToString(expression[0]))) throw new Exception("Obliczenie nie zaczyna się liczbą, nawiasem");
+        if (IsOperator(Convert.ToString(expression[0])) || IsOperator(Convert.ToString(expression[^1])) ) throw new Exception("Obliczenie nie zaczyna/kończy się liczbą, nawiasem");
         for (int i = 0;i<expression.Length;i++)
         {
+            if(expression[i] == '.' || expression[i] == ',')
+            {
+                string numb = Tokens[^1]+expression[i];
+                int j = i+1;
+                for (; j < expression.Length; j++)
+                {
+                    if (!IsDigit(Convert.ToString(expression[j]))) break;
+                    else
+                    {
+                        numb += Convert.ToString(expression[j]);
+                    }
+                }
+                i = j - 1;
+                Tokens.RemoveAt(Tokens.Count-1);
+                Tokens.Add(numb);
+            }
+            else
             if (IsBracket(Convert.ToString(expression[i])) || IsOperator(Convert.ToString(expression[i]))) Tokens.Add(Convert.ToString(expression[i]));
             else if (IsDigit(Convert.ToString(expression[i])))
             {
@@ -110,7 +127,7 @@ class Calc
         else return 0;
     }
     static bool IsNumeric(string str)
-    {
+    { 
         return double.TryParse(str, out _);
     }
     static bool IsOperator(string token)
