@@ -3,7 +3,7 @@ class Calc
 {
     public static void Calculator()
     { 
-        Console.WriteLine("\t\tLogoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tUWAGA!\tKalkulator nie obsługuje liczb ujemnych [zamiast -5 napisz (5-10) albo (5-5*2)]\n\tUWAGA!\tPrzy ułamkach dziesiętnych użyj [,] albo [.] w zależności od systemu i regionu");
+        Console.WriteLine("Logoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tUWAGA!\tKalkulator nie obsługuje liczb ujemnych [zamiast -5 napisz (5-10) albo (5-5*2)]\n\tUWAGA!\tPrzy ułamkach dziesiętnych użyj [,] albo [.] w zależności od systemu i regionu");
         while (!false)
         {
             Console.Write("Wprowadź wyrażenie (lub pusty aby zakończyć): ");
@@ -64,12 +64,6 @@ class Calc
             }
             else throw new Exception("W obliczeniu występuje nieprawidłowy znak");
         }
-        Console.Write("DEBUG:\t");
-        foreach (var Token in Tokens)
-        {
-            Console.Write("["+Token+"] ");
-        }
-        Console.WriteLine();
         return Tokens;
     }
     public static List<string> ConvertToRPN(List<string> inputExpression)
@@ -93,12 +87,6 @@ class Calc
             }
         }
         while (operatorStack.Count > 0) output.Add(operatorStack.Pop());
-        Console.Write("ONP:\t");
-        foreach (var i in output)
-        {
-            Console.Write(i+" ");
-        }
-        Console.WriteLine();
         return output;
     }
     public static double CalculateRPN(List<string> expression)
