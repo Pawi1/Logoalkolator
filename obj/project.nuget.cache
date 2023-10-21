@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "W/65kO0ja97t/lJ88mzEY3sG+ktXGgXDDpsE6fE8UPsO9PBtgavivbsTFIuqhaGFY7PeHGNh9OgKWsPqKfPNIw==",
+  "success": true,
+  "projectFilePath": "/home/pawil/Pulpit/Logoalkolator/Logoalkolator.csproj",
+  "expectedPackageFiles": [
+    "/home/pawil/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.12/microsoft.aspnetcore.app.ref.7.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
