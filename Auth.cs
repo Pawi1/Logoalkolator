@@ -52,7 +52,7 @@ public class Auth
             }
 
             if (!isCorrectLogin) Console.Write($"Podanie dane są niepropawne, pozostało {10 - j - 1} prób ...");
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             Console.Clear();
             if (isCorrectLogin) break;
         }
@@ -89,13 +89,15 @@ public class Auth
             {
                 Console.Write("Przyznano dostęp");
                 isSober = true;
+                Thread.Sleep(2000);
+                Console.Clear();
                 break;
             }
             else if (j == 0) Console.Write($"Odmówiono dostępu, masz jeszcze drugą szanse ...");
             else Console.Write($"Odmówiono dostępu, program wyłączy się ...");
-        }
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             Console.Clear();
+        }
             return isSober;
     } 
 }
