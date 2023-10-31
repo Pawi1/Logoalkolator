@@ -3,8 +3,8 @@ class Calc
 {
     public static void Calculator()
     { 
-        Console.WriteLine("Logoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tUWAGA!\tKalkulator nie obsługuje liczb ujemnych [zamiast -5 napisz (5-10) albo (5-5*2)]\n\tUWAGA!\tPrzy ułamkach dziesiętnych użyj [,] albo [.] w zależności od systemu i regionu");
-        while (!false)
+        Console.WriteLine("Logoalkolator: Kalkulator\nDozwolone znaki: liczby, nawiasy [(], [)], dodawania [+], odejmowania [-], dzielenia [/], mnożenia [*]\n\tUWAGA!\tPrzy ułamkach dziesiętnych użyj [,] albo [.] w zależności od systemu i regionu");
+        while (true)
         {
             Console.Write("Wprowadź wyrażenie (lub pusty aby zakończyć): ");
             string expression = Console.ReadLine()??"";
@@ -26,9 +26,44 @@ class Calc
     public static List<string> expressionToList(string expression)
     {
         List<string> Tokens = new List<string>();
-        if (IsOperator(Convert.ToString(expression[0])) || IsOperator(Convert.ToString(expression[^1])) ) throw new Exception("Obliczenie nie zaczyna/kończy się liczbą, nawiasem");
+        if ((IsOperator(Convert.ToString(expression[0])) || IsOperator(Convert.ToString(expression[^1]))) && expression[0] != '-') throw new Exception("Obliczenie nie zaczyna/kończy się liczbą, nawiasem");
         for (int i = 0;i<expression.Length;i++)
         {
+            if(i < expression.Length-1 && expression[i] == '-')
+            {
+                if(i == 0)
+                {
+                    string numb = "-";
+                    int j = i+1;
+                    for (; j < expression.Length; j++)
+                    {
+                        if (!IsDigit(Convert.ToString(expression[j]))) break;
+                        else
+                        {
+                            numb += Convert.ToString(expression[j]);
+                        }
+                    }
+                    i = j;
+                    Tokens.Add(numb);
+                    if(i == expression.Length) break;
+                }
+                else if(IsOperator(Convert.ToString(expression[i-1])) || IsBracket(Convert.ToString(expression[i-1])))
+                {
+                    string numb = "-";
+                    int j = i+1;
+                    for (; j < expression.Length; j++)
+                    {
+                        if (!IsDigit(Convert.ToString(expression[j]))) break;
+                        else
+                        {
+                            numb += Convert.ToString(expression[j]);
+                        }
+                    }
+                    i = j;
+                    Tokens.Add(numb);
+                    if(i == expression.Length) break;
+                }
+            }    
             if(expression[i] == '.' || expression[i] == ',')
             {
                 string numb = Tokens[^1]+expression[i];
@@ -44,6 +79,7 @@ class Calc
                 i = j - 1;
                 Tokens.RemoveAt(Tokens.Count-1);
                 Tokens.Add(numb);
+                if(i == expression.Length) break;
             }
             else
             if (IsBracket(Convert.ToString(expression[i])) || IsOperator(Convert.ToString(expression[i]))) Tokens.Add(Convert.ToString(expression[i]));
@@ -61,6 +97,7 @@ class Calc
                 }
                 i = j - 1;
                 Tokens.Add(numb);
+                if(i == expression.Length) break;
             }
             else throw new Exception("W obliczeniu występuje nieprawidłowy znak");
         }
