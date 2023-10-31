@@ -89,13 +89,13 @@ public class Auth
             {
                 Console.Write("Przyznano dostęp");
                 isSober = true;
+                break;
             }
             else if (j == 0) Console.Write($"Odmówiono dostępu, masz jeszcze drugą szanse ...");
             else Console.Write($"Odmówiono dostępu, program wyłączy się ...");
-
+        }
             Thread.Sleep(1500);
             Console.Clear();
-        }
             return isSober;
     } 
 }
